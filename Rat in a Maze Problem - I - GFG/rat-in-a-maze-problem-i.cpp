@@ -12,13 +12,14 @@ class Solution{
     public:
     int size;
     vector<string> ans;
+    vector<vector<bool>> vis;
     
     bool isBadCell(int row,int col)
     {
         return (row<0 || col<0 || row>=size || col>=size);
     }
     
-    void dfs(int row,int col,string curr,vector<vector<int>> &maze,vector<vector<bool>> &vis)
+    void dfs(int row,int col,string curr,vector<vector<int>> &maze)
     {
         if(isBadCell(row,col) || maze[row][col]==0 || vis[row][col])
             return;
@@ -31,10 +32,10 @@ class Solution{
             
         vis[row][col]=true;
         
-        dfs(row+1,col,curr+'D',maze,vis);
-        dfs(row-1,col,curr+'U',maze,vis);
-        dfs(row,col+1,curr+'R',maze,vis);
-        dfs(row,col-1,curr+'L',maze,vis);
+        dfs(row+1,col,curr+'D',maze);
+        dfs(row-1,col,curr+'U',maze);
+        dfs(row,col+1,curr+'R',maze);
+        dfs(row,col-1,curr+'L',maze);
         
         vis[row][col]=false;
     }
@@ -43,9 +44,9 @@ class Solution{
         size=n;
         string curr="";
         
-        vector<vector<bool>> vis(n,vector<bool>(n,false));
+        vis.resize(n,vector<bool>(n,false));
         int row=0,col=0;
-        dfs(row,col,curr,maze,vis);
+        dfs(row,col,curr,maze);
         return ans;
     }
 };
